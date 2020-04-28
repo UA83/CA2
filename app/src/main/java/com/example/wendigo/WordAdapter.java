@@ -31,7 +31,7 @@ public class WordAdapter extends ArrayAdapter<Task> {
         Task currentWord = getItem(position);
 
         TextView taskTask = listItemView.findViewById(R.id.text_view_task_name);
-        taskTask.setText(currentWord.getName());
+        taskTask.setText(currentWord.getTask());
 
         return listItemView;
     }

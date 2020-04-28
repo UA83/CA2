@@ -1,26 +1,35 @@
 package com.example.wendigo;
 
-public class Task implements java.io.Serializable{
+public class Task {
 
-    private String mName;
+    private int _id;
+    private String mTask;
     private String mStatus = "0";
 
-    public Task(String mName, String mStatus) {
-        this.mName = mName;
+    public Task(String mTask, String mStatus) {
+
+        this.mTask = mTask;
         this.mStatus = mStatus;
     }
 
+    public int getID(){
+        return this._id;
+    }
+
+    public void setID(int id){
+        this._id = id;
+    }
+
     public Task(String mName) {
-        this.mName = mName;
+        this.mTask = mName;
     }
 
-
-    public String getName() {
-        return mName;
+    public String getTask() {
+        return mTask;
     }
 
-    public void setName(String mName) {
-        this.mName = mName;
+    public void setTask(String mTask) {
+        this.mTask = mTask;
     }
 
     public String getStatus() {

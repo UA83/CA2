@@ -63,9 +63,9 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Toast.makeText(MainActivity.this, "Test : " + tasks.get(position).getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Test : " + tasks.get(position).getTask(), Toast.LENGTH_SHORT).show();
         Intent mngIntent = new Intent(MainActivity.this, ManageTaskActivity.class);
-        mngIntent.putExtra("taskName", tasks.get(position).getName().toString());
+        mngIntent.putExtra("taskName", tasks.get(position).getTask().toString());
         mngIntent.putExtra("taskStatus", tasks.get(position).getStatus().toString());
         // Start the new activity
         startActivity(mngIntent);
