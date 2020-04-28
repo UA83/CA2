@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +13,15 @@ import android.widget.Toast;
 
 public class ManageTaskActivity extends AppCompatActivity {
 
+    String TAG = "INFO";
+
     Button btnDone;
     Button btnDelete;
     Button btnUpdate;
 
     EditText editTextUpdateTask;
+
+    TasksDatabaseHandler mDatabase = new TasksDatabaseHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,47 +32,50 @@ public class ManageTaskActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String taskName = intent.getStringExtra("taskName");
+        String taskStatus = intent.getStringExtra("taskStatus");
+        String taskID = intent.getStringExtra("taskID");
 
         editTextUpdateTask.setText(taskName);
-        btnDelete = findViewById(R.id.button_delete);
 
+
+        //***********************************************
+        //***********************************************
+        // DELETED
+        btnDelete = findViewById(R.id.button_delete);
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskDelete();
+                Toast.makeText(ManageTaskActivity.this, "Task DELETED: ", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Task DELETED: ");
             }
         });
 
+        //***********************************************
+        //***********************************************
+        // DONE
         btnDone = findViewById(R.id.button_done);
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskDone();
+                Toast.makeText(ManageTaskActivity.this, "Task DONE: ", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Task DONE: ");
             }
         });
 
+
+        //***********************************************
+        //***********************************************
+        // UPDATE
         btnUpdate = findViewById(R.id.button_update);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskUpdate();
-            }
+                Toast.makeText(ManageTaskActivity.this, "Task UPDATED: ", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Task UPDATED: ");
+              }
         });
 
 
     }
-
-    private void taskDelete() {
-        Toast.makeText(this, "This task Was DELETED", Toast.LENGTH_SHORT).show();
-    }
-
-    private void taskUpdate() {
-        Toast.makeText(this, "This task was UPDATED", Toast.LENGTH_SHORT).show();
-    }
-
-    private void taskDone() {
-        Toast.makeText(this, "This task is DONE now", Toast.LENGTH_SHORT).show();
-    }
-
 
 }
