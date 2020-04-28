@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#29B6F6</color>
+    <color name="colorPrimaryDark">#42A5F5</color>42A5F5
+    <color name="colorAccent">#03DAC5</color>
+    <color name="send_button_pressed">#29B6F6</color>
+    <color name="send_button_released">#42A5F5</color>
+    <color name="top_title">#FFFFFF</color>
+</resources>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Wendigo</string>
+    <string name="app_title_task">What will you do today?</string>
+    <string name="category_manage_task">Task Management</string>
+</resources>
