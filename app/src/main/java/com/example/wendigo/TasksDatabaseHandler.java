@@ -3,12 +3,13 @@ package com.example.wendigo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class TasksDatabaseHandler extends SQLiteOpenHelper {
+
+    private String TAG = "DEBUG";
 
     public static String TASK = "task";
     public static String STATUS = "status";
@@ -19,7 +20,7 @@ public class TasksDatabaseHandler extends SQLiteOpenHelper {
 
     // DB name, not using, DB version, every time a new version is created the db is recreated.
     public TasksDatabaseHandler(Context context) {
-        super(context, "tasksDb", null, 21);
+        super(context, "tasksDb", null, 60);
     }
 
     // Creating tables for DB
@@ -45,16 +46,23 @@ public class TasksDatabaseHandler extends SQLiteOpenHelper {
     void addTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        // Task
-        values.put("task", task.getTask());
-        // Task status
-        values.put("status", task.getStatus());
+        try {
+            ContentValues values = new ContentValues();
+            // Task
+            values.put("task", task.getTask());
+            // Task status
+            values.put("status", task.getStatus());
 
-        // Inserting Row, values are the values got from x.getName above
-        db.insert("tasks", null, values);
-        //2nd argument is String containing nullColumnHack
-        db.close(); // Closing database connection
+            // Inserting Row, values are the values got from x.getName above
+            db.insert("tasks", null, values);
+            //2nd argument is String containing nullColumnHack
+            db.close(); // Closing database connection
+
+        } catch (Exception e) {
+            Log.i(TAG, "addTask: " + e.toString());
+        }
+
+
     }
 
 
@@ -62,9 +70,9 @@ public class TasksDatabaseHandler extends SQLiteOpenHelper {
     // code to get a single task
     Task getTask(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("tasks", new String[] {"id",
+        Cursor cursor = db.query("tasks", new String[]{"id",
                         "name", "status"}, "id" + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
@@ -78,7 +86,7 @@ public class TasksDatabaseHandler extends SQLiteOpenHelper {
     // code to get all tasks in a list view
     public Cursor getAllTasks() {
         // Select All Query
-        String selectQuery = "SELECT  * FROM  tasks ORDER BY status ASC;" ;
+        String selectQuery = "SELECT  * FROM  tasks ORDER BY status ASC;";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor taskList = db.rawQuery(selectQuery, null);
@@ -87,26 +95,41 @@ public class TasksDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // code to update the single task
-    public int taskUpdate(Task task) {
+    void taskUpdate(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put("task", task.getTask());
-        //values.put("status", task.getStatus());
+
+        if (task.getStatus().equals("1")) {
+            Log.i(TAG, "UPDATE STATUS");
+            values.put("status", task.getStatus());
+        } else {
+            Log.i(TAG, "UPDATE NOOOOOOT STATUS");
+            values.put("task", task.getTask());
+        }
 
         // updating row
-        Log.i("TAG", "taskUpdate: " + task.getTask() + "-" + task.getStatus() + " -- " + task.getID());
-        return db.update("tasks", values, "_id" + " = ?",
-                new String[] { String.valueOf(task.getID()) });
-
+        try {
+            Log.i(TAG, "taskUpdate: " + task.getTask() + "-" + task.getStatus() + " -- " + task.getID());
+            db.update("tasks", values, "_id" + " = ?",
+                    new String[]{String.valueOf(task.getID())});
+        } catch (Exception e) {
+            Log.i(TAG, "Exception: " + e.toString());
+        }
     }
 
+
     // Deleting single task
-    public void deleteTask(Task task) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("tasks", "id" + " = ?",
-                new String[] { String.valueOf(task.getID()) });
-        db.close();
+    public String deleteTask(Task task) {
+        Log.i(TAG, "Before All: " + task.toString());
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete("tasks", "_id" + " = ?",
+                    new String[]{String.valueOf(task.getID())});
+            db.close();
+        } catch (Exception e) {
+            Log.i(TAG, "deleteTask: " + e.toString());
+        }
+        return "wft";
     }
 
     // Getting tasks Count
@@ -119,6 +142,4 @@ public class TasksDatabaseHandler extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
-
-
 }

@@ -23,13 +23,13 @@
             android:gravity="left"
             android:text="ToDoAPP"
             android:textSize="24sp"
-            android:textColor="@color/top_title"
+            android:textColor="@color/white"
             android:layout_marginStart="16dp" />
 
         <TextView
             android:id="@+id/text_view_date"
             android:layout_width="wrap_content"
-            android:textColor="@color/top_title"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="16dp"
@@ -48,6 +48,7 @@
 
         <ListView
             android:id="@android:id/list"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

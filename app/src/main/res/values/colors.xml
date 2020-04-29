@@ -5,5 +5,7 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="send_button_pressed">#29B6F6</color>
     <color name="send_button_released">#42A5F5</color>
-    <color name="top_title">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="lightGrey">#dbdbdb</color>
+
 </resources>

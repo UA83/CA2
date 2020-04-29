@@ -1,6 +1,9 @@
 package com.example.wendigo;
 
-public class Task {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Task implements Parcelable {
 
     String _id;
     String mTask;
@@ -17,6 +20,24 @@ public class Task {
         this.mTask = mTask;
         this.mStatus = mStatus;
     }
+
+    protected Task(Parcel in) {
+        _id = in.readString();
+        mTask = in.readString();
+        mStatus = in.readString();
+    }
+
+    public static final Creator<Task> CREATOR = new Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 
     public String getID(){
         return this._id;
@@ -44,5 +65,17 @@ public class Task {
 
     public void setStatus(String mStatus) {
         this.mStatus = mStatus;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
+        dest.writeString(mTask);
+        dest.writeString(mStatus);
     }
 }
